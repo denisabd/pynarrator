@@ -1,0 +1,2 @@
+import pynarrator
+pynarrator.__version__
