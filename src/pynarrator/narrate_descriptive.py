@@ -28,6 +28,13 @@ def narrate_descriptive(
   simplify = False
   ):
     
+    """
+    Create Descriptive Text Narratives from Data
+    :param df: Optional "kind" of ingredients.
+    :type df: pandasDataFrame
+    :return: A dicionary of narratives by default and list if 'simplify = True'
+    :rtype: dict[str]
+    """
   # Assert data frame
   if not isinstance(df, pd.DataFrame):
     print('df must be a pandas DataFrame')
