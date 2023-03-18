@@ -1,7 +1,3 @@
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
-sandbox.py
+sandbox.ipynb
 package_prep
 dist/

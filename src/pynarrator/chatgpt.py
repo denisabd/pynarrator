@@ -16,10 +16,10 @@ def gpt_get_completions(
   # presence_penalty = float(os.getenv("OPENAI_PRESENCE_PENALTY", 0))
 
   messages = [
-      {"role": "system",
-       "content": "You are a helpful assistant with extensive knowledge of Python programming."},
-      {"role": "user",
-       "content": prompt}
+    {"role": "system",
+      "content": "You are a helpful assistant with extensive business knowledge."},
+    {"role": "user",
+      "content": prompt}
   ]
           
   completion = openai.ChatCompletion.create(
@@ -28,3 +28,37 @@ def gpt_get_completions(
   )
   
   return(completion.choices[0].message.content)
+
+def enhance_narrative(
+  narrative,
+  openai_api_key=os.getenv("OPENAI_API_KEY")
+):
+
+  prompt = f'Improve the narrative by adding better business language for the following: "{narrative}"'
+  print(prompt)
+  output = gpt_get_completions(prompt, openai_api_key=openai_api_key)
+
+  return(output)
+
+def translate_narrative(
+  narrative,
+  language,
+  openai_api_key=os.getenv("OPENAI_API_KEY")
+):
+
+  prompt = f'Using professional language translate the following text to {language}: "{narrative}"'
+  print(prompt)
+  output = gpt_get_completions(prompt, openai_api_key=openai_api_key)
+
+  return(output)
+
+def summarize_narrative(
+  narrative,
+  openai_api_key=os.getenv("OPENAI_API_KEY")
+):
+
+  prompt = f'Summarize the following narrative to make it shorter: "{narrative}"'
+  print(prompt)
+  output = gpt_get_completions(prompt, openai_api_key=openai_api_key)
+
+  return(output)
