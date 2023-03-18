@@ -2,12 +2,9 @@ Metadata-Version: 2.1
 Name: pynarrator
 Version: 0.0.1.1
 Summary: Template-based NLG framework for creating text narratives out of data
-Home-page: UNKNOWN
 Author: Denis Abdullin
 Author-email: denisabdullincz@gmail.com
-License: UNKNOWN
 Keywords: python,nlg,template
-Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.6
 Classifier: Programming Language :: Python :: 3.7
@@ -47,5 +44,3 @@ Now create descriptive narratives from your data
 ```python
 narrate_descriptive(df, measure = 'Sales', dimensions = ['Region', 'Product'])
 ```
-
-

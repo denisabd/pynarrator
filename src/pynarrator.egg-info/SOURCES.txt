@@ -1,8 +1,10 @@
 LICENSE
 README.md
+README.rst
 setup.py
 src/pynarrator.egg-info/PKG-INFO
 src/pynarrator.egg-info/SOURCES.txt
 src/pynarrator.egg-info/dependency_links.txt
 src/pynarrator.egg-info/requires.txt
 src/pynarrator.egg-info/top_level.txt
+tests/test_narrate_descriptive.py
