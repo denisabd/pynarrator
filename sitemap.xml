@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://github.com/denisabd/pynarrator/</loc>
+         <loc>https://pynarrator.readthedocs.io/</loc>
          <lastmod>2023-03-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://github.com/denisabd/pynarrator/descriptive/</loc>
+         <loc>https://pynarrator.readthedocs.io/descriptive/</loc>
          <lastmod>2023-03-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://github.com/denisabd/pynarrator/reference/</loc>
+         <loc>https://pynarrator.readthedocs.io/reference/</loc>
          <lastmod>2023-03-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
