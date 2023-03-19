@@ -1,8 +1,10 @@
 site_name: pynarrator
-site_url: https://pynarrator.readthedocs.io
+site_url: https://denisabd.github.io/narrator/
 nav:
     - Home: index.md
     - Reference: reference.md
     - Descriptive: descriptive.md
 
-theme: readthedocs
+theme: 
+    name: readthedocs
+    highlightjs: true
