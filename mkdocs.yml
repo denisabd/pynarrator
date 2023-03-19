@@ -1,0 +1,8 @@
+site_name: pynarrator
+site_url: https://github.com/denisabd/pynarrator
+nav:
+    - Home: index.md
+    - Reference: reference.md
+    - Descriptive: descriptive.md
+
+theme: readthedocs

@@ -5,7 +5,7 @@ Template-based NLG framework for creating text narratives out of data
 
 You can install the package from pip:
 
-```python
+```bash
 pip3 install pynarrator
 ```
 
