@@ -1,5 +1,5 @@
 site_name: pynarrator
-site_url: https://github.com/denisabd/pynarrator
+site_url: https://pynarrator.readthedocs.io
 nav:
     - Home: index.md
     - Reference: reference.md
