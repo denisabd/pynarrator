@@ -17,30 +17,379 @@ Description-Content-Type: text/markdown
 Provides-Extra: dev
 License-File: LICENSE
 
-# pynarrator
-Template-based NLG framework for creating text narratives out of data
-
-## Installation
-
-You can install the package from pip:
-
-```python
-pip3 install pynarrator
-```
-
-## Usage
-
-Import the package functions and create a data frame.
-
-```python
-from pynarrator import narrate_descriptive, read_data
-
-df = read_data()
-
-df.head()
-```
-
-Now create descriptive narratives from your data
-```python
-narrate_descriptive(df, measure = 'Sales', dimensions = ['Region', 'Product'])
-```
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "ModuleNotFoundError",
+     "evalue": "No module named 'pynarrator'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mModuleNotFoundError\u001b[0m                       Traceback (most recent call last)",
+      "Cell \u001b[0;32mIn[11], line 2\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[39mimport\u001b[39;00m \u001b[39mos\u001b[39;00m\n\u001b[0;32m----> 2\u001b[0m \u001b[39mfrom\u001b[39;00m \u001b[39mpynarrator\u001b[39;00m \u001b[39mimport\u001b[39;00m narrate_descriptive, read_data, gpt_get_completions, enhance_narrative, translate_narrative, summarize_narrative\n",
+      "\u001b[0;31mModuleNotFoundError\u001b[0m: No module named 'pynarrator'"
+     ]
+    }
+   ],
+   "source": [
+    "import os\n",
+    "from pynarrator import narrate_descriptive, read_data, gpt_get_completions, enhance_narrative, translate_narrative, summarize_narrative"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "ModuleNotFoundError",
+     "evalue": "No module named 'pynarrator'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mModuleNotFoundError\u001b[0m                       Traceback (most recent call last)",
+      "Cell \u001b[0;32mIn[2], line 1\u001b[0m\n\u001b[0;32m----> 1\u001b[0m \u001b[39mimport\u001b[39;00m \u001b[39mpynarrator\u001b[39;00m\n",
+      "\u001b[0;31mModuleNotFoundError\u001b[0m: No module named 'pynarrator'"
+     ]
+    }
+   ],
+   "source": [
+    "import pynarrator"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Order ID</th>\n",
+       "      <th>Date</th>\n",
+       "      <th>Region</th>\n",
+       "      <th>Product</th>\n",
+       "      <th>Store</th>\n",
+       "      <th>Promotion</th>\n",
+       "      <th>Price</th>\n",
+       "      <th>Quantity</th>\n",
+       "      <th>Sales</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>QR10276</td>\n",
+       "      <td>2019-01-30</td>\n",
+       "      <td>EMEA</td>\n",
+       "      <td>Tools</td>\n",
+       "      <td>Big</td>\n",
+       "      <td>1</td>\n",
+       "      <td>89.6</td>\n",
+       "      <td>28</td>\n",
+       "      <td>2007.04</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>QR15245</td>\n",
+       "      <td>2020-07-26</td>\n",
+       "      <td>ASPAC</td>\n",
+       "      <td>Tools</td>\n",
+       "      <td>Big</td>\n",
+       "      <td>0</td>\n",
+       "      <td>268.5</td>\n",
+       "      <td>7</td>\n",
+       "      <td>1879.50</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>QR13938</td>\n",
+       "      <td>2020-03-05</td>\n",
+       "      <td>EMEA</td>\n",
+       "      <td>Home</td>\n",
+       "      <td>Big</td>\n",
+       "      <td>0</td>\n",
+       "      <td>223.3</td>\n",
+       "      <td>18</td>\n",
+       "      <td>4019.40</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>QR15934</td>\n",
+       "      <td>2020-10-08</td>\n",
+       "      <td>LATAM</td>\n",
+       "      <td>Clothing</td>\n",
+       "      <td>Big</td>\n",
+       "      <td>0</td>\n",
+       "      <td>210.4</td>\n",
+       "      <td>27</td>\n",
+       "      <td>5680.80</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>QR10963</td>\n",
+       "      <td>2019-04-15</td>\n",
+       "      <td>EMEA</td>\n",
+       "      <td>Tools</td>\n",
+       "      <td>Big</td>\n",
+       "      <td>0</td>\n",
+       "      <td>193.1</td>\n",
+       "      <td>22</td>\n",
+       "      <td>4248.20</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "  Order ID        Date Region   Product Store  Promotion  Price  Quantity  \\\n",
+       "0  QR10276  2019-01-30   EMEA     Tools   Big          1   89.6        28   \n",
+       "1  QR15245  2020-07-26  ASPAC     Tools   Big          0  268.5         7   \n",
+       "2  QR13938  2020-03-05   EMEA      Home   Big          0  223.3        18   \n",
+       "3  QR15934  2020-10-08  LATAM  Clothing   Big          0  210.4        27   \n",
+       "4  QR10963  2019-04-15   EMEA     Tools   Big          0  193.1        22   \n",
+       "\n",
+       "     Sales  \n",
+       "0  2007.04  \n",
+       "1  1879.50  \n",
+       "2  4019.40  \n",
+       "3  5680.80  \n",
+       "4  4248.20  "
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df = read_data()\n",
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "{'Total Sales': 'Total Sales across all Regions is 38790478.42.'}\n"
+     ]
+    }
+   ],
+   "source": [
+    "narrative = narrate_descriptive(df, measure = 'Sales', dimensions = ['Region', 'Product'])\n",
+    "print(narrative)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "\"{'Total Sales': 'Total Sales across all Regions is 38790478.42.'}\""
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "n = str(narrative)\n",
+    "f'{narrative}'"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Improve the narrative by adding better business language for the following: \"Total Spend went up by 2354, from 1000 to 3354\"\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'The overall expenditure has escalated by 2354 units, signaling a substantial increase from the initial sum of 1000 units to a revised estimate of 3354 units.'"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "enhance_narrative(\"Total Spend went up by 2354, from 1000 to 3354\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Improve the narrative by adding better business language for the following: \"{'Total Sales': 'Total Sales across all Regions is 38790478.42.'}\"\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'\"The aggregate revenue generated by all business units across different geographic regions is 38790478.42, constituting the Total Sales figure. This metric represents the entire sum of income earned by the organization and is a key indicator of its financial performance.\"'"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "enhance_narrative(narrative)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "The current report details the sales performance of the business across different regions and segments. The overall sales across all regions amount to 2.3 million. The outlying regions have contributed significantly to the sales figures, with the West region raking in 725,457.9 or 31.6% of the total sales, followed by the East region with 678,781.2, making up for 29.5% of the total sales.\n",
+      "\n",
+      "Upon further scrutiny, it is observed that the West region's crucial segment by sales is the Consumer segment, accounting for 50.0% or 362,880.8 in sales. Similarly, in the East region, the Consumer segment has emerged as the significant contributor to sales, making up 51.7% or 350,908.2 in sales. \n",
+      "\n",
+      "A closer examination of sales across all segments indicates that the Consumer segment remains the most significant contributor, with sales across all segments totaling 2.3 million. The Consumer segment alone has brought in 1.2 million in sales, accounting for 50.6% of the total sales figures.\n"
+     ]
+    }
+   ],
+   "source": [
+    "prompt = \"Improve the narrative by adding better business language for 'By Region Sales across all Regions is 2.3 M. Outlying Regions by Sales: West (725,457.9, 31.6 %), East (678,781.2, 29.5 %) West by Segment. In West, Sales across all Segment is equal to 725,457.9. In West, significant Segment by Sales: Consumer (362,880.8, 50.0 %) East by Segment. In East, Sales across all Segment is equal to 678,781.2. In East, significant Segment by Sales: Consumer (350,908.2, 51.7 %). By Segment. Sales across all Segment is 2.3 M. Outlying Segment by Sales: Consumer (1.2 M, 50.6 %)'\"\n",
+    "\n",
+    "output = gpt_get_completions(prompt)\n",
+    "print(output)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Using professional language translate the following text to Russian: \"The current report details the sales performance of the business across different regions and segments. The overall sales across all regions amount to 2.3 million. The outlying regions have contributed significantly to the sales figures, with the West region raking in 725,457.9 or 31.6% of the total sales, followed by the East region with 678,781.2, making up for 29.5% of the total sales.\n",
+      "\n",
+      "Upon further scrutiny, it is observed that the West region's crucial segment by sales is the Consumer segment, accounting for 50.0% or 362,880.8 in sales. Similarly, in the East region, the Consumer segment has emerged as the significant contributor to sales, making up 51.7% or 350,908.2 in sales. \n",
+      "\n",
+      "A closer examination of sales across all segments indicates that the Consumer segment remains the most significant contributor, with sales across all segments totaling 2.3 million. The Consumer segment alone has brought in 1.2 million in sales, accounting for 50.6% of the total sales figures.\"\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'Данный отчет подробно описывает продажи бизнеса по различным регионам и сегментам. Общий объем продаж по всем регионам составляет 2,3 миллиона. Отдельные выделенные регионы внесли значительный вклад в продажи: Западный регион приносит 725 457,9 или 31,6% от общих продаж, за ним следует Восточный регион с 678 781,2, что составляет 29,5% от общих продаж.\\n\\nДальнейший анализ показал, что в Западном регионе Consumer-сегмент имеет первостепенное значение в продажах, которые составили 50,0% или 362 880,8. Аналогично, в Восточном регионе, Consumer-сегмент представляет собой значительный вклад в продажи, составляя 51,7% или 350 908,2.\\n\\nПри более тщательном изучении продаж во всех сегментах видно, что Consumer-сегмент остается наиболее значимым, с общим объемом продаж в 2,3 миллиона. Consumer-сегмент по отдельности принес более 1,2 миллиона продаж, что составляет 50,6% от общей суммы продаж.'"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "translate_narrative(output, language=\"Russian\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Summarize the following narrative to make it shorter: \"The current report details the sales performance of the business across different regions and segments. The overall sales across all regions amount to 2.3 million. The outlying regions have contributed significantly to the sales figures, with the West region raking in 725,457.9 or 31.6% of the total sales, followed by the East region with 678,781.2, making up for 29.5% of the total sales.\n",
+      "\n",
+      "Upon further scrutiny, it is observed that the West region's crucial segment by sales is the Consumer segment, accounting for 50.0% or 362,880.8 in sales. Similarly, in the East region, the Consumer segment has emerged as the significant contributor to sales, making up 51.7% or 350,908.2 in sales. \n",
+      "\n",
+      "A closer examination of sales across all segments indicates that the Consumer segment remains the most significant contributor, with sales across all segments totaling 2.3 million. The Consumer segment alone has brought in 1.2 million in sales, accounting for 50.6% of the total sales figures.\"\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'This report shows sales performance by region and segment, with overall sales at 2.3 million. The West region had the highest sales at 725,457.9, followed by the East at 678,781.2. The Consumer segment was the most significant contributor to sales, accounting for 50.6% or 1.2 million in sales.'"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "summarize_narrative(output)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.6"
+  },
+  "orig_nbformat": 4
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

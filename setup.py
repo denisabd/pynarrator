@@ -1,7 +1,7 @@
 from setuptools import setup
 import os
 
-with open('README.md', 'r') as fh:
+with open('README.ipynb', 'r') as fh:
   long_description = fh.read()
   
 setup(
@@ -15,10 +15,11 @@ setup(
   py_modules = [
     'narrate_descriptive', 
     'pluralize', 
-    'data'
+    'data',
+    'chatgpt'
     ],
   package_dir = {'': 'src'},
-  install_requires = ['pandas >= 1.0.0', 'inflect >= 6.0.0'],
+  install_requires = ['pandas >= 1.0.0', 'inflect >= 6.0.0', 'openai'],
   extras_require = {'dev': ['pytest >= 3.7']},
   keywords = ['python', 'nlg', 'template'],
   classifiers = [

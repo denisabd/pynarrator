@@ -1,6 +1,5 @@
 LICENSE
 README.md
-README.rst
 setup.py
 src/pynarrator.egg-info/PKG-INFO
 src/pynarrator.egg-info/SOURCES.txt
