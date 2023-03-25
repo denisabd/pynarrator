@@ -21,7 +21,7 @@ setup(
   package_dir = {'': 'src'},
   install_requires = ['pandas >= 1.0.0', 'inflect >= 6.0.0', 'openai'],
   extras_require = {'dev': ['pytest >= 3.7']},
-  keywords = ['python', 'nlg', 'template'],
+  keywords = ['python', 'nlg', 'template', 'chatgpt'],
   classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.6",
