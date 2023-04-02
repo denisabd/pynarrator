@@ -1,14 +1,3 @@
-# pynarrator
-Template-based NLG framework for creating text narratives out of data
-
-## Installation
-
-You can install the package from pip:
-
-```bash
-pip3 install pynarrator
-```
-
 ```python
 import os
 from pynarrator import narrate_descriptive, read_data, gpt_get_completions, enhance_narrative, translate_narrative, summarize_narrative
