@@ -4,6 +4,19 @@ from pynarrator import narrate_descriptive, read_data, gpt_get_completions, enha
 ```
 
 
+    ---------------------------------------------------------------------------
+
+    ModuleNotFoundError                       Traceback (most recent call last)
+
+    Cell In[15], line 2
+          1 import os
+    ----> 2 from pynarrator import narrate_descriptive, read_data, gpt_get_completions, enhance_narrative, translate_narrative, summarize_narrative
+
+
+    ModuleNotFoundError: No module named 'pynarrator'
+
+
+
 ```python
 df = read_data()
 df.head()

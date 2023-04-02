@@ -2,9 +2,14 @@ site_name: pynarrator
 site_url: https://denisabd.github.io/narrator/
 nav:
     - Home: index.md
-    - Reference: reference.md
     - Descriptive: descriptive.md
 
 theme: 
-    name: readthedocs
+    name: material
     highlightjs: true
+
+plugins:
+  - search
+  - mkdocstrings:
+        default_handler: python
+        module_name: pynarrator

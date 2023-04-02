@@ -2,9 +2,12 @@ Metadata-Version: 2.1
 Name: pynarrator
 Version: 0.0.1.1
 Summary: Template-based NLG framework for creating text narratives out of data
+Home-page: UNKNOWN
 Author: Denis Abdullin
 Author-email: denisabdullincz@gmail.com
+License: UNKNOWN
 Keywords: python,nlg,template,chatgpt
+Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.6
 Classifier: Programming Language :: Python :: 3.7
@@ -21,21 +24,9 @@ License-File: LICENSE
  "cells": [
   {
    "cell_type": "code",
-   "execution_count": 13,
+   "execution_count": 1,
    "metadata": {},
-   "outputs": [
-    {
-     "ename": "ModuleNotFoundError",
-     "evalue": "No module named 'pynarrator'",
-     "output_type": "error",
-     "traceback": [
-      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
-      "\u001b[0;31mModuleNotFoundError\u001b[0m                       Traceback (most recent call last)",
-      "Cell \u001b[0;32mIn[13], line 2\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[39mimport\u001b[39;00m \u001b[39mos\u001b[39;00m\n\u001b[0;32m----> 2\u001b[0m \u001b[39mfrom\u001b[39;00m \u001b[39mpynarrator\u001b[39;00m \u001b[39mimport\u001b[39;00m narrate_descriptive, read_data, gpt_get_completions, enhance_narrative, translate_narrative, summarize_narrative\n",
-      "\u001b[0;31mModuleNotFoundError\u001b[0m: No module named 'pynarrator'"
-     ]
-    }
-   ],
+   "outputs": [],
    "source": [
     "import os\n",
     "from pynarrator import narrate_descriptive, read_data, gpt_get_completions, enhance_narrative, translate_narrative, summarize_narrative"
@@ -43,7 +34,7 @@ License-File: LICENSE
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": 11,
    "metadata": {},
    "outputs": [
     {
@@ -159,7 +150,7 @@ License-File: LICENSE
        "4  4248.20  "
       ]
      },
-     "execution_count": 2,
+     "execution_count": 11,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -171,7 +162,7 @@ License-File: LICENSE
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
+   "execution_count": 7,
    "metadata": {},
    "outputs": [
     {
@@ -189,7 +180,7 @@ License-File: LICENSE
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
+   "execution_count": 8,
    "metadata": {},
    "outputs": [
     {
@@ -198,7 +189,7 @@ License-File: LICENSE
        "\"{'Total Sales': 'Total Sales across all Regions is 38790478.42.'}\""
       ]
      },
-     "execution_count": 4,
+     "execution_count": 8,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -210,7 +201,7 @@ License-File: LICENSE
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
+   "execution_count": 9,
    "metadata": {},
    "outputs": [
     {
@@ -223,10 +214,10 @@ License-File: LICENSE
     {
      "data": {
       "text/plain": [
-       "'The overall expenditure has escalated by 2354 units, signaling a substantial increase from the initial sum of 1000 units to a revised estimate of 3354 units.'"
+       "'The overall expenditure witnessed a substantial increase of 2354 units, soaring from 1000 to 3354 units.'"
       ]
      },
-     "execution_count": 5,
+     "execution_count": 9,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -237,7 +228,7 @@ License-File: LICENSE
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": null,
    "metadata": {},
    "outputs": [
     {
@@ -264,7 +255,7 @@ License-File: LICENSE
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": null,
    "metadata": {},
    "outputs": [
     {
@@ -288,7 +279,7 @@ License-File: LICENSE
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
+   "execution_count": null,
    "metadata": {},
    "outputs": [
     {
@@ -319,7 +310,7 @@ License-File: LICENSE
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": null,
    "metadata": {},
    "outputs": [
     {
@@ -372,3 +363,5 @@ License-File: LICENSE
  "nbformat": 4,
  "nbformat_minor": 2
 }
+
+
