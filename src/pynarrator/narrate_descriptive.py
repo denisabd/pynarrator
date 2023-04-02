@@ -1,6 +1,95 @@
 import pandas as pd
 from pynarrator.pluralize import pluralize
 
+def get_descriptive_outliers(
+    df, 
+    dimension, 
+    measure, 
+    total=None, 
+    summarization="sum", 
+    coverage=0.5, 
+    coverage_limit=5):
+    """
+    Returns descriptive outliers based on a given dataframe, dimension, and measure.
+
+    Args:
+    df (pandas.DataFrame): The dataframe to analyze.
+    dimension (str): The dimension to group by.
+    measure (str): The measure to use for aggregation.
+    total (float, optional): The total value to use for calculation. Defaults to None.
+    summarization (str, optional): The type of summarization to use (sum, count, or average). Defaults to "sum".
+    coverage (float, optional): The coverage percentage to use for filtering. Defaults to 0.5.
+    coverage_limit (int, optional): The maximum number of outliers to return. Defaults to 5.
+
+    Returns:
+    dict: A dictionary containing the number of outliers, outlier levels, outlier values, and outlier percentages.
+
+    Raises:
+    ValueError: If the summarization parameter is not one of "sum", "count", or "average".
+
+    Examples:
+    >>> import pandas as pd
+    >>> data = {'A': ['foo', 'foo', 'bar', 'bar', 'baz', 'baz', 'qux', 'qux'],
+                'B': [1, 2, 3, 4, 5, 6, 7, 8],
+                'C': [10, 20, 30, 40, 50, 60, 70, 80]}
+    >>> df = pd.DataFrame(data)
+    >>> get_descriptive_outliers(df, 'A', 'C')
+    {'n_outliers': 3, 'outlier_levels': ['qux', 'baz', 'bar'], 'outlier_values': [80, 60, 40], 'outlier_values_p': ['25.0%', '18.75%', '12.5%']}
+
+    >>> get_descriptive_outliers(df, 'A', 'C', summarization='average')
+    {'n_outliers': 3, 'outlier_levels': ['qux', 'baz', 'bar'], 'outlier_values': [1.0, -0.25, -0.5], 'outlier_values_p': ['47.62%', '11.90%', '23.81%']}
+    """
+    table = df.groupby(dimension)[measure].agg(
+        sum if summarization == "sum" else 
+        pd.Series.nunique if summarization == "count" else 
+        "mean"
+        ).reset_index().sort_values(by=measure, ascending=False)
+
+    if summarization in ["sum", "count"]:
+        if total is None:
+            total = table[measure].sum()
+
+        table = (
+            table.assign(
+                share=lambda x: x[measure] / total,
+                cum_share=lambda x: x["share"].cumsum()
+            )
+            .query('cum_share < @coverage')
+            .iloc[:coverage_limit]
+        )
+
+        if len(table) == 1 and table["cum_share"].iloc[0] == 1:
+            return None
+
+    elif summarization == "average":
+        if total is None:
+            total = table[measure].mean()
+
+        table = (
+            table.assign(
+                share=lambda x: (x[measure] / total) - 1,
+                abs_share=lambda x: x["share"].abs(),
+                cum_share=lambda x: x["abs_share"].cumsum() / (x["abs_share"].max() - x["abs_share"].min())
+            )
+            .query('cum_share < @coverage*2')
+            .sort_values(by="abs_share", ascending=False)
+            .iloc[:coverage_limit]
+        )
+
+    n_outliers = table.shape[0]
+    outlier_levels = table[dimension].astype(str).values.tolist()
+    outlier_values = table[measure].round(1).values.tolist()
+    outlier_values_p = (table["share"].round(2) * 100).astype(str).add("%").values.tolist()
+
+    output = {
+        "n_outliers": n_outliers,
+        "outlier_levels": outlier_levels,
+        "outlier_values": outlier_values,
+        "outlier_values_p": outlier_values_p
+    }
+
+    return output
+
 def narrate_descriptive(
   df,
   measure = None,
@@ -114,8 +203,80 @@ def narrate_descriptive(
         'total_raw': total_raw
     }
   }
-  
-  
+
+  # High-Level Narrative
+  for dimension in dimensions:
+
+    output = get_descriptive_outliers(
+      df = df,
+      dimension=dimension,
+      measure=measure,
+      # we need overall total for average only, in other cases it leads to incorrect output
+      total = None if summarization in ["sum", "count"] else total_raw,
+      summarization = summarization,
+      coverage = coverage,
+      coverage_limit = coverage_limit
+    )
+
+    if output is None:
+        continue
+
+    # Outputting all to the global env
+    n_outliers = output['n_outliers']
+    outlier_levels = output['outlier_levels']
+    outlier_values = output['outlier_values']
+    outlier_values_p = output['outlier_values_p']
+
+    if summarization == 'average':
+      outlier_insight = ', '.join([f"{outlier_levels} ({outlier_values}, {outlier_values_p} vs average {measure})" for outlier_levels, outlier_values, outlier_values_p in zip(outlier_levels, outlier_values, outlier_values_p)])
+    else:
+      outlier_insight = ', '.join([f"{outlier_levels} ({outlier_values}, {outlier_values_p})" for outlier_levels, outlier_values, outlier_values_p in zip(outlier_levels, outlier_values, outlier_values_p)])
+
+    if n_outliers > 1:
+      template_outlier_final = template_outlier_multiple
+      template_selected = "multiple"
+    else:
+      template_outlier_final = template_outlier
+      template_selected = "single"
+
+    narrative_outlier_final = {
+       f'{dimension} by {measure}': eval(f"f'{template_outlier_final}'")
+       }
+    
+    narrative.update(narrative_outlier_final)
+
+    if template_selected == 'single':
+      variables_l1 = { 
+         f'{dimension} by {measure}': {
+          'narrative_outlier_final': narrative_outlier_final,        
+          'template_outlier': template_outlier,        
+          'dimension': dimension,        
+          'measure': measure,        
+          'outlier_insight': outlier_insight,        
+          'n_outliers': n_outliers,        
+          'outlier_levels': outlier_levels,        
+          'outlier_values': outlier_values,        
+          'outlier_values_p': outlier_values_p    
+          }
+        }
+
+    if template_selected == 'multiple':
+      variables_l1 = { 
+         f'{dimension} by {measure}': {
+          'narrative_outlier_final': narrative_outlier_final,        
+          'template_outlier_multiple': template_outlier_multiple,        
+          'dimension': dimension,        
+          'measure': measure,        
+          'outlier_insight': outlier_insight,        
+          'n_outliers': n_outliers,        
+          'outlier_levels': outlier_levels,        
+          'outlier_values': outlier_values,        
+          'outlier_values_p': outlier_values_p    
+          }
+        }
+
+    variables.update(variables_l1)
+    
   # Output
   if return_data == True:
     return(variables)
@@ -124,20 +285,4 @@ def narrate_descriptive(
     narrative = list(narrative.values())
     
   return(narrative)
-# 
-# df2 = df.groupby(['Region', 'Product']).agg({'Sales': 'sum'}).reset_index()
-# df2.shape
-# type(df2)
-# sum(df2['Sales'])
-# narrate_descriptive(df2)
-# 
-# df3 = df.groupby(['Region', 'Product']).agg({'Sales': 'sum'})
-# df3['Sales'].sum().sum()
-# 
-# narrate_descriptive(df, measure = 'Sales', dimensions = ['Region', 'Product'], return_data=False,  simplify=True)
-# 
-# measure = 'Sales'
-# dimensions = ['Region', 'Product']
-# return_data=False
-# simplify=True
 

@@ -35,7 +35,6 @@ def enhance_narrative(
 ):
 
   prompt = f'Improve the narrative by adding better business language for the following: "{narrative}"'
-  print(prompt)
   output = gpt_get_completions(prompt, openai_api_key=openai_api_key)
 
   return(output)
@@ -47,7 +46,6 @@ def translate_narrative(
 ):
 
   prompt = f'Using professional language translate the following text to {language}: "{narrative}"'
-  print(prompt)
   output = gpt_get_completions(prompt, openai_api_key=openai_api_key)
 
   return(output)
@@ -58,7 +56,6 @@ def summarize_narrative(
 ):
 
   prompt = f'Summarize the following narrative to make it shorter: "{narrative}"'
-  print(prompt)
   output = gpt_get_completions(prompt, openai_api_key=openai_api_key)
 
   return(output)
