@@ -1,12 +1,12 @@
 from setuptools import setup
 import os
 
-with open('README.ipynb', 'r') as fh:
-  long_description = fh.read()
+with open('README.md', 'r') as fh:
+   long_description = fh.read()
   
 setup(
   name = 'pynarrator',
-  version = '0.0.1.4',
+  version = '0.0.1.5',
   author = 'Denis Abdullin',
   author_email = 'denisabdullincz@gmail.com',
   description = 'Template-based NLG framework for creating text narratives out of data',

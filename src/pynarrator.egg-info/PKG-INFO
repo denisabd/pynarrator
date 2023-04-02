@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pynarrator
-Version: 0.0.1.4
+Version: 0.0.1.5
 Summary: Template-based NLG framework for creating text narratives out of data
 Home-page: UNKNOWN
 Author: Denis Abdullin
@@ -20,334 +20,32 @@ Description-Content-Type: text/markdown
 Provides-Extra: dev
 License-File: LICENSE
 
-{
- "cells": [
-  {
-   "cell_type": "code",
-   "execution_count": 1,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "import os\n",
-    "from pynarrator import narrate_descriptive, read_data, gpt_get_completions, enhance_narrative, translate_narrative, summarize_narrative"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 2,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<div>\n",
-       "<style scoped>\n",
-       "    .dataframe tbody tr th:only-of-type {\n",
-       "        vertical-align: middle;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe tbody tr th {\n",
-       "        vertical-align: top;\n",
-       "    }\n",
-       "\n",
-       "    .dataframe thead th {\n",
-       "        text-align: right;\n",
-       "    }\n",
-       "</style>\n",
-       "<table border=\"1\" class=\"dataframe\">\n",
-       "  <thead>\n",
-       "    <tr style=\"text-align: right;\">\n",
-       "      <th></th>\n",
-       "      <th>Order ID</th>\n",
-       "      <th>Date</th>\n",
-       "      <th>Region</th>\n",
-       "      <th>Product</th>\n",
-       "      <th>Store</th>\n",
-       "      <th>Promotion</th>\n",
-       "      <th>Price</th>\n",
-       "      <th>Quantity</th>\n",
-       "      <th>Sales</th>\n",
-       "    </tr>\n",
-       "  </thead>\n",
-       "  <tbody>\n",
-       "    <tr>\n",
-       "      <th>0</th>\n",
-       "      <td>QR10276</td>\n",
-       "      <td>2019-01-30</td>\n",
-       "      <td>EMEA</td>\n",
-       "      <td>Tools</td>\n",
-       "      <td>Big</td>\n",
-       "      <td>1</td>\n",
-       "      <td>89.6</td>\n",
-       "      <td>28</td>\n",
-       "      <td>2007.04</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>1</th>\n",
-       "      <td>QR15245</td>\n",
-       "      <td>2020-07-26</td>\n",
-       "      <td>ASPAC</td>\n",
-       "      <td>Tools</td>\n",
-       "      <td>Big</td>\n",
-       "      <td>0</td>\n",
-       "      <td>268.5</td>\n",
-       "      <td>7</td>\n",
-       "      <td>1879.50</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>2</th>\n",
-       "      <td>QR13938</td>\n",
-       "      <td>2020-03-05</td>\n",
-       "      <td>EMEA</td>\n",
-       "      <td>Home</td>\n",
-       "      <td>Big</td>\n",
-       "      <td>0</td>\n",
-       "      <td>223.3</td>\n",
-       "      <td>18</td>\n",
-       "      <td>4019.40</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>3</th>\n",
-       "      <td>QR15934</td>\n",
-       "      <td>2020-10-08</td>\n",
-       "      <td>LATAM</td>\n",
-       "      <td>Clothing</td>\n",
-       "      <td>Big</td>\n",
-       "      <td>0</td>\n",
-       "      <td>210.4</td>\n",
-       "      <td>27</td>\n",
-       "      <td>5680.80</td>\n",
-       "    </tr>\n",
-       "    <tr>\n",
-       "      <th>4</th>\n",
-       "      <td>QR10963</td>\n",
-       "      <td>2019-04-15</td>\n",
-       "      <td>EMEA</td>\n",
-       "      <td>Tools</td>\n",
-       "      <td>Big</td>\n",
-       "      <td>0</td>\n",
-       "      <td>193.1</td>\n",
-       "      <td>22</td>\n",
-       "      <td>4248.20</td>\n",
-       "    </tr>\n",
-       "  </tbody>\n",
-       "</table>\n",
-       "</div>"
-      ],
-      "text/plain": [
-       "  Order ID        Date Region   Product Store  Promotion  Price  Quantity  \\\n",
-       "0  QR10276  2019-01-30   EMEA     Tools   Big          1   89.6        28   \n",
-       "1  QR15245  2020-07-26  ASPAC     Tools   Big          0  268.5         7   \n",
-       "2  QR13938  2020-03-05   EMEA      Home   Big          0  223.3        18   \n",
-       "3  QR15934  2020-10-08  LATAM  Clothing   Big          0  210.4        27   \n",
-       "4  QR10963  2019-04-15   EMEA     Tools   Big          0  193.1        22   \n",
-       "\n",
-       "     Sales  \n",
-       "0  2007.04  \n",
-       "1  1879.50  \n",
-       "2  4019.40  \n",
-       "3  5680.80  \n",
-       "4  4248.20  "
-      ]
-     },
-     "execution_count": 2,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "df = read_data()\n",
-    "df.head()"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 3,
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "{'Total Sales': 'Total Sales across all Regions is 38790478.42.', 'Region by Sales': 'Outlying Region by Sales is NA (18079736.4, 47.0%).', 'Product by Sales': 'Outlying Product by Sales is Food & Beverage (15543469.7, 40.0%).'}\n"
-     ]
-    }
-   ],
-   "source": [
-    "narrative = narrate_descriptive(df, measure = 'Sales', dimensions = ['Region', 'Product'], return_data = False, coverage = 0.5)\n",
-    "print(narrative)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 4,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "{'Total Sales': 'Total Sales across all Regions is 38790478.42.',\n",
-       " 'Region by Sales': 'Outlying Region by Sales is NA (18079736.4, 47.0%).',\n",
-       " 'Product by Sales': 'Outlying Product by Sales is Food & Beverage (15543469.7, 40.0%).'}"
-      ]
-     },
-     "execution_count": 4,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "narrate_descriptive(df, measure = 'Sales', dimensions = ['Region', 'Product'], return_data = False, coverage = 0.5)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 5,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "['Total Sales across all Regions is 38790478.42.',\n",
-       " 'Outlying Region by Sales is NA (18079736.4, 47.0%).',\n",
-       " 'Outlying Product by Sales is Food & Beverage (15543469.7, 40.0%).']"
-      ]
-     },
-     "execution_count": 5,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "narrate_descriptive(df, measure = 'Sales', dimensions = ['Region', 'Product'], simplify=True, coverage = 0.5)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 6,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "\"{'Total Sales': 'Total Sales across all Regions is 38790478.42.', 'Region by Sales': 'Outlying Region by Sales is NA (18079736.4, 47.0%).', 'Product by Sales': 'Outlying Product by Sales is Food & Beverage (15543469.7, 40.0%).'}\""
-      ]
-     },
-     "execution_count": 6,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "n = str(narrative)\n",
-    "f'{narrative}'"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 7,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "\"As a knowledgeable business assistant, I would like to present key business insights for your consideration. The Total Sales figure, which represents the aggregate revenue generated across all operational Regions, stands at a noteworthy 38,790,478.42. \\n\\nFurther, an analysis of sales performance by distinct Regions reveals that the Outlying Region has generated top sales, accounting for 47.0% of the revenue, totaling an impressive 18,079,736.4. \\n\\nIn addition, a product-centric analysis has also been conducted, which underscores the significant contribution of the Food & Beverage segment towards the company's overall sales figures. This product category has emerged as the Outlying Product by Sales, generating a revenue of 15,543,469.7, which accounts for 40.0% of the total sales. \\n\\nI hope that this information helps you in making informed business decisions. Please do not hesitate to reach out in case of any further queries.\""
-      ]
-     },
-     "execution_count": 7,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "enhance_narrative(narrative)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 8,
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "The latest sales figures reveal that the company generated a revenue of 2.3 million through its operations across all regions. Sales across different regions were as follows: West generated the highest revenue of 725,457.9 (31.6%), while in the East, sales worth 678,781.2 (29.5%) were recorded. In the West region, the Consumer segment proved to be the most significant contributor, generating 50.0% of total sales, with revenue amounting to 362,880.8. Similarly, in the East, the Consumer segment dominated, contributing 51.7% of the total sales value of 350,908.2. \n",
-      "\n",
-      "Breaking down the figures by segment, the consumer segment proved to be the most successful for the company, contributing 1.2 million (50.6%) of the total sales. This highlights the importance of investing resources and efforts towards consumer-centric products and services, as they seem to be the primary drivers of revenue growth for the company.\n"
-     ]
-    }
-   ],
-   "source": [
-    "prompt = \"Improve the narrative by adding better business language for 'By Region Sales across all Regions is 2.3 M. Outlying Regions by Sales: West (725,457.9, 31.6 %), East (678,781.2, 29.5 %) West by Segment. In West, Sales across all Segment is equal to 725,457.9. In West, significant Segment by Sales: Consumer (362,880.8, 50.0 %) East by Segment. In East, Sales across all Segment is equal to 678,781.2. In East, significant Segment by Sales: Consumer (350,908.2, 51.7 %). By Segment. Sales across all Segment is 2.3 M. Outlying Segment by Sales: Consumer (1.2 M, 50.6 %)'\"\n",
-    "\n",
-    "output = gpt_get_completions(prompt)\n",
-    "print(output)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 9,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "'Последние данные по продажам показывают, что компания заработала доход в размере 2,3 миллиона через свои операции во всех регионах. Продажи в различных регионах были следующими: Запад сгенерировал наибольший доход в размере 725 457,9 (31,6%), в то время как на Востоке были зафиксированы продажи на сумму 678 781,2 (29,5%). В регионе Запада Сегмент потребителей оказался наиболее значимым вкладчиком, генерируя 50,0% от общих продаж, с общим доходом в размере 362 880,8. Аналогично, на востоке Сегмент потребителей доминировал, внося 51,7% от общей стоимости продажи в размере 350 908,2.\\nРазбивая цифры по сегментам, Сегмент потребителей оказался наиболее успешным для компании, внесшим 1,2 миллиона (50,6%) от общей выручки. Это подчеркивает важность вложения ресурсов и усилий в потребительские продукты и услуги, так как они, кажется, являются основными движущими силами роста доходов для компании.'"
-      ]
-     },
-     "execution_count": 9,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "translate_narrative(output, language=\"Russian\")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 10,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "'The company generated 2.3 million in revenue across regions. Consumer sales in the West and East regions were dominant, contributing 50% and 51.7% respectively. The consumer segment drove 50.6% of total sales, showing the importance of investing in consumer-centric products and services.'"
-      ]
-     },
-     "execution_count": 10,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "summarize_narrative(output)"
-   ]
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.9.6"
-  },
-  "orig_nbformat": 4
- },
- "nbformat": 4,
- "nbformat_minor": 2
-}
+# pynarrator
+Template-based NLG framework for creating text narratives out of data
+
+## Installation
+
+You can install the package from pip:
+
+```bash
+pip3 install pynarrator
+```
+
+## Usage
+
+Import the package functions and create a data frame.
+
+```python
+from pynarrator import narrate_descriptive, read_data
+
+df = read_data()
+
+df.head()
+```
+
+Now create descriptive narratives from your data
+```python
+narrate_descriptive(df, measure = 'Sales', dimensions = ['Region', 'Product'])
+```
 
 
