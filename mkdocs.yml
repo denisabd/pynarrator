@@ -1,5 +1,5 @@
 site_name: pynarrator
-site_url: https://denisabd.github.io/pynarrator/
+site_url: https://denisabd.github.io/narrator/
 nav:
     - Home: index.md
     - Descriptive: descriptive.md
