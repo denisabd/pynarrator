@@ -47,34 +47,31 @@ def get_descriptive_outliers(
 
     if summarization in ["sum", "count"]:
         if total is None:
-            total = table[measure].sum()
+            total = table[measure].sum().round(2)
 
         table = (
-            table.assign(
-                share=lambda x: x[measure] / total,
-                cum_share=lambda x: x["share"].cumsum()
-            )
-            .query('cum_share < @coverage')
+           table.assign(
+            share=lambda x: x[measure]/total)
+            .assign(cum_share=lambda x: x['share'].cumsum())
+            .loc[lambda x: (x['cum_share'] >= coverage).shift(fill_value=False).cumsum() == 0]
             .iloc[:coverage_limit]
         )
 
-        if len(table) == 1 and table["cum_share"].iloc[0] == 1:
+        if len(table) == 1 and table['cum_share'].iloc[0] == 1:
             return None
 
-    elif summarization == "average":
+    elif summarization == 'average':
         if total is None:
-            total = table[measure].mean()
+            total = table[measure].mean().round(2)
 
-        table = (
-            table.assign(
-                share=lambda x: (x[measure] / total) - 1,
-                abs_share=lambda x: x["share"].abs(),
-                cum_share=lambda x: x["abs_share"].cumsum() / (x["abs_share"].max() - x["abs_share"].min())
-            )
-            .query('cum_share < @coverage*2')
-            .sort_values(by="abs_share", ascending=False)
-            .iloc[:coverage_limit]
-        )
+        table = (table
+          .assign(share = lambda x: x[measure]/total - 1)
+          .assign(abs_share=lambda x: x['share'].abs())
+          .sort_values(by='abs_share', ascending=False)
+          .assign(cum_share=lambda x: x['share'].abs().cumsum()/(x['share'].max() - x['share'].min()))
+          .loc[lambda x: (x['cum_share'] >= coverage*2).shift(fill_value=False).cumsum() == 0]
+          .iloc[:coverage_limit]
+          )
 
     n_outliers = table.shape[0]
     outlier_levels = table[dimension].astype(str).values.tolist()

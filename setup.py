@@ -6,7 +6,7 @@ with open('README.md', 'r') as fh:
   
 setup(
   name = 'pynarrator',
-  version = '0.0.1.5',
+  version = '0.0.1.7',
   author = 'Denis Abdullin',
   author_email = 'denisabdullincz@gmail.com',
   description = 'Template-based NLG framework for creating text narratives out of data',
