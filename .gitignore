@@ -2,4 +2,5 @@ README.ipynb
 package_prep
 dist/
 pynarrator/
+.DS_Store
 sandbox.ipynb
