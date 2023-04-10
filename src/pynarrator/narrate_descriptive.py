@@ -176,9 +176,9 @@ def narrate_descriptive(
   dimension_one = dimensions[0]
   
   if summarization == 'sum':
-    total_raw = df[measure].sum()
+    total_raw = df[measure].sum().round(2)
   elif summarization == 'average':
-    total_raw = df[measure].mean()
+    total_raw = df[measure].mean().round(2)
   elif summarization == 'count':
     total_raw = df[measure].count()
 
