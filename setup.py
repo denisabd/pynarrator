@@ -6,7 +6,7 @@ with open('README.md', 'r') as fh:
   
 setup(
   name = 'pynarrator',
-  version = '0.0.1.8',
+  version = '0.0.1.10',
   author = 'Denis Abdullin',
   author_email = 'denisabdullincz@gmail.com',
   description = 'Template-based NLG framework for creating text narratives out of data',
@@ -15,8 +15,13 @@ setup(
   py_modules = [
     'narrate_descriptive', 
     'pluralize', 
-    'data',
-    'chatgpt'
+    'read_data',
+    'chatgpt',
+    'clean_text',
+    'tags',
+    'get_frequency',
+    'format_text',
+    'format_pct'
     ],
   package_dir = {'': 'src'},
   install_requires = ['pandas >= 1.0.0', 'inflect >= 6.0.0', 'openai'],
