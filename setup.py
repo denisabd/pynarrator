@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 import os
 
 with open('README.md', 'r') as fh:
@@ -6,12 +6,12 @@ with open('README.md', 'r') as fh:
   
 setup(
   name = 'pynarrator',
-  version = '0.0.1.10',
+  version = '0.0.1.12',
   author = 'Denis Abdullin',
   author_email = 'denisabdullincz@gmail.com',
   description = 'Template-based NLG framework for creating text narratives out of data',
-  long_description = long_description,
   long_description_content_type = 'text/markdown',
+  long_description = long_description,
   py_modules = [
     'narrate_descriptive', 
     'pluralize', 
@@ -23,7 +23,7 @@ setup(
     'format_text',
     'format_pct'
     ],
-  package_dir = {'': 'src'},
+  packages = find_packages(),
   install_requires = ['pandas >= 1.0.0', 'inflect >= 6.0.0', 'openai'],
   extras_require = {'dev': ['pytest >= 3.7']},
   keywords = ['python', 'nlg', 'template', 'chatgpt'],

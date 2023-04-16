@@ -51,27 +51,3 @@ def format_pct(
 
     text_output = [clean_text(t) for t in text] if isinstance(text, list) else clean_text(text)
     return text_output
-
-
-text = ['Spend increased by 13.2 %', '7.23 %', 'Grew be 3%']
-
-# Replace excessive punctuation
-text = [re.sub(' %', '%', t) for t in text]
-text = [re.sub(r'\(', ' (', t) for t in text]
-text = [re.sub(r'\)', ') ', t) for t in text]
-text = [re.sub(r'(?![.%-//)//://(])[[:punct:]]', '', t) for t in text]
-
-print(text)
-
-positive = 'green'
-negative = 'red'
-
-for i, t in enumerate(text):
-    t_list = t.split()
-    num_value = float(re.sub(r'[^\d.-]', '', t_list[0])) if '%' in t_list[0] else None
-    t_list[0] = format_text(t_list[0], color=positive) if num_value is not None and num_value >= 0 else format_text(t_list[0], color=negative) if num_value is not None and num_value < 0 else t_list[0]
-    text[i] = ' '.join(t_list)
-    print(f'Enumerate PRINT: iteration N{i} | {text[i]}')
-
-#output = format_pct(text)
-#print(output)

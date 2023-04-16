@@ -1,4 +1,0 @@
-chatgpt
-data
-narrate_descriptive
-pluralize

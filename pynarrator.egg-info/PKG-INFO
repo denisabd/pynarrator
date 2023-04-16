@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pynarrator
-Version: 0.0.1.10
+Version: 0.0.1.12
 Summary: Template-based NLG framework for creating text narratives out of data
 Author: Denis Abdullin
 Author-email: denisabdullincz@gmail.com
