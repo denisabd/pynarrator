@@ -34,9 +34,17 @@ narrative = narrate_descriptive(sales, measure = 'Sales', dimensions = ['Region'
 
 ## Chat GPT
 
+In order to use ChatGPT in pynarrator, you must specify your OpenAI API token as `OPENAI_API_KEY` environment variable:
+
+```python
+os.environ['OPENAI_API_KEY'] = 'xx-xxxxxxxxxx'
+```
+
 ```python
  from pynarrator import gpt_get_completions, enhance_narrative, translate_narrative, summarize_narrative
 ```
+
+Improve the narrative text to make it rich with business language
 
 ```python
 enhance_narrative(narrative)

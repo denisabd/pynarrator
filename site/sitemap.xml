@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://denisabd.github.io/narrator/</loc>
-         <lastmod>2023-04-02</lastmod>
+         <loc>https://denisabd.github.io/pynarrator/</loc>
+         <lastmod>2023-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://denisabd.github.io/narrator/descriptive/</loc>
-         <lastmod>2023-04-02</lastmod>
+         <loc>https://denisabd.github.io/pynarrator/descriptive/</loc>
+         <lastmod>2023-04-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

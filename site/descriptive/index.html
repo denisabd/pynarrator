@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://denisabd.github.io/narrator/descriptive/">
+        <link rel="canonical" href="https://denisabd.github.io/pynarrator/descriptive/">
       
       
         <link rel="prev" href="..">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.4">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.6">
     
     
       
@@ -23,7 +23,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.240905d7.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ded33207.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
@@ -391,7 +391,10 @@ narrative strings will be returned instead of a dictionary.</p>
 </details>
       <details class="quote">
         <summary>Source code in <code>pynarrator/narrate_descriptive.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 93</span>
+        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
 <span class="normal"> 94</span>
 <span class="normal"> 95</span>
 <span class="normal"> 96</span>
@@ -582,10 +585,7 @@ narrative strings will be returned instead of a dictionary.</p>
 <span class="normal">281</span>
 <span class="normal">282</span>
 <span class="normal">283</span>
-<span class="normal">284</span>
-<span class="normal">285</span>
-<span class="normal">286</span>
-<span class="normal">287</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">narrate_descriptive</span><span class="p">(</span>
+<span class="normal">284</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">narrate_descriptive</span><span class="p">(</span>
   <span class="n">df</span><span class="p">,</span>
   <span class="n">measure</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">dimensions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -674,9 +674,9 @@ narrative strings will be returned instead of a dictionary.</p>
   <span class="n">dimension_one</span> <span class="o">=</span> <span class="n">dimensions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
   <span class="k">if</span> <span class="n">summarization</span> <span class="o">==</span> <span class="s1">&#39;sum&#39;</span><span class="p">:</span>
-    <span class="n">total_raw</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">measure</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">total_raw</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">measure</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
   <span class="k">elif</span> <span class="n">summarization</span> <span class="o">==</span> <span class="s1">&#39;average&#39;</span><span class="p">:</span>
-    <span class="n">total_raw</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">measure</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">total_raw</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">measure</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
   <span class="k">elif</span> <span class="n">summarization</span> <span class="o">==</span> <span class="s1">&#39;count&#39;</span><span class="p">:</span>
     <span class="n">total_raw</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">measure</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 
@@ -825,7 +825,7 @@ narrative strings will be returned instead of a dictionary.</p>
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.19047be9.min.js"></script>
+      <script src="../assets/javascripts/bundle.51198bba.min.js"></script>
       
     
   </body>
