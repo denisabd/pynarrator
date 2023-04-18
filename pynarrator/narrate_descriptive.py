@@ -1,5 +1,5 @@
 import pandas as pd
-from pynarrator.pluralize import pluralize
+from pynarrator.text_helpers import pluralize
 
 def get_descriptive_outliers(
     df, 
@@ -57,7 +57,7 @@ def get_descriptive_outliers(
             .iloc[:coverage_limit]
         )
 
-        if len(table) == 1 and table['cum_share'].iloc[0] == 1:
+        if df.shape[0] == 1 and table['cum_share'].iloc[0] == 1:
             return None
 
     elif summarization == 'average':

@@ -1,5 +1,5 @@
 import pandas as pd
-from pynarrator import ytd_volume, pytd_volume
+from pynarrator.trend_helpers import ytd_volume, pytd_volume
 
 def get_trend_outliers(
     df, 
@@ -38,54 +38,49 @@ def get_trend_outliers(
     >>> get_trend_outliers(sales_monthly, 'A', 'C', summarization='average')
     {'n_outliers': 3, 'outlier_levels': ['qux', 'baz', 'bar'], 'outlier_values': [1.0, -0.25, -0.5], 'outlier_values_p': ['47.62%', '11.90%', '23.81%']}
     """
+    grouped = df.groupby(dimension)
+
+    # Define a function to apply to each group
+    def process_group(group, ytd_volume, pytd_volume, summarization, measure):
+        curr_volume = ytd_volume(group, summarization=summarization, measure=measure)
+        prev_volume = pytd_volume(group, summarization=summarization, measure=measure)
+        change = curr_volume - prev_volume
+        change_p = f"{round(change / prev_volume * 100, 2)}%"
+        abs_change = abs(change)
+        trend = "increase" if change > 0 else "decrease"
+        
+        output = pd.Series({
+            "curr_volume": curr_volume,
+            "prev_volume": prev_volume,
+            "change": change,
+            "change_p": change_p,
+            "abs_change": abs_change,
+            "trend": trend,
+        })
+        
+        return output
+
+    # Apply the function to each group and create a new DataFrame
+    table = grouped.apply(process_group, ytd_volume, pytd_volume, summarization, measure)
+
+    # Reset the index and sort by abs_change
+    table = table.reset_index().sort_values(by="abs_change", ascending=False)
+
     if summarization in ["sum", "count"]:
-        if total is None:
-            total = table[measure].sum().round(2)
-      
-        grouped = df.groupby(dimension)
+      if total is None:
+        total = df[measure].sum().round(2)
 
-        # Define a function to apply to each group
-        def process_group(group, ytd_volume, pytd_volume, summarization, measure):
-            curr_volume = ytd_volume(group, summarization=summarization, measure=measure)
-            prev_volume = pytd_volume(group, summarization=summarization, measure=measure)
-            change = curr_volume - prev_volume
-            change_p = f"{round(change / prev_volume * 100, 2)}%"
-            abs_change = abs(change)
-            trend = "increase" if change > 0 else "decrease"
-            
-            output = pd.Series({
-                "curr_volume": curr_volume,
-                "prev_volume": prev_volume,
-                "change": change,
-                "change_p": change_p,
-                "abs_change": abs_change,
-                "trend": trend,
-            })
-            
-            return output
+    table = (
+        table.assign(share=lambda x: x['abs_change'] / x['abs_change'].sum())
+              .assign(cum_share=lambda x: x['share'].cumsum())
+              .assign(lag_cum_share=lambda x: x['cum_share'].shift(fill_value=False))
+    ).reset_index()
 
-        # Apply the function to each group and create a new DataFrame
-        table = grouped.apply(process_group, ytd_volume, pytd_volume, summarization, measure)
+    table = table[table['lag_cum_share'] < coverage]
+    table = table.head(coverage_limit)
 
-        # Reset the index and sort by abs_change
-        table = table.reset_index().sort_values(by="abs_change", ascending=False)
-
-        # Assuming you have a DataFrame named 'table'
-        #table['share'] = table['abs_change'] / table['abs_change'].sum()
-        #table['cum_share'] = table['share'].cumsum()
-        #table['lag_cum_share'] = table['cum_share'].shift(fill_value=False)
-
-        table = (
-            table.assign(share=lambda x: x['abs_change'] / x['abs_change'].sum())
-                  .assign(cum_share=lambda x: x['share'].cumsum())
-                  .assign(lag_cum_share=lambda x: x['cum_share'].shift(fill_value=False))
-        )
-
-        table = table[table['lag_cum_share'] < coverage]
-        table = table.head(coverage_limit)
-
-        if len(table) == 1 and table['cum_share'].iloc[0] == 1:
-            return None
+    if df.shape[0] == 1 and table['cum_share'].iloc[0] == 1:
+        return None
 
     elif summarization == 'average':
         if total is None:
@@ -113,6 +108,17 @@ def get_trend_outliers(
     }
 
     return output
+
+from pynarrator.data import read_data
+import pandas as pd
+import numpy as np
+
+sales = read_data()
+sales['Date'] = pd.to_datetime(sales['Date'])
+sales_monthly = sales.groupby(['Region', 'Product', pd.Grouper(key='Date', freq='MS')])['Sales'].sum().reset_index()
+
+out = get_trend_outliers(sales_monthly, dimension = 'Region', measure = 'Sales')
+print(out)
 
 def narrate_trend(
   df,

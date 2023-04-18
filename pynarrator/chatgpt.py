@@ -1,5 +1,4 @@
 import openai
-import json
 import os
 
 def gpt_get_completions(

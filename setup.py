@@ -1,12 +1,11 @@
 from setuptools import setup, find_packages
-import os
 
 with open('README.md', 'r') as fh:
    long_description = fh.read()
   
 setup(
   name = 'pynarrator',
-  version = '0.0.1.13',
+  version = '0.0.1.14',
   author = 'Denis Abdullin',
   author_email = 'denisabdullincz@gmail.com',
   description = 'Template-based NLG framework for creating text narratives out of data',
@@ -14,22 +13,19 @@ setup(
   long_description = long_description,
   py_modules = [
     'chatgpt',
-    'clean_text',
     'data',
-    'format_pct',
-    'format_text',
-    'get_frequency',
     'narrate_descriptive', 
     'narrate_trend',
-    'pluralize', 
-    'tags',
-    'ytd'
+    'text_helpers', 
+    'trend_helpers'
     ],
   packages = find_packages(),
   install_requires = ['pandas >= 1.0.0', 'inflect >= 6.0.0', 'openai'],
   extras_require = {'dev': ['pytest >= 3.7']},
   keywords = ['python', 'nlg', 'template', 'chatgpt'],
   classifiers = [
+    "Development Status :: 2 - Pre-Alpha Copy",
+    "Intended Audience :: Developers",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",

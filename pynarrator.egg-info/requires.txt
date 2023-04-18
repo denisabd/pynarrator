@@ -1,6 +1,0 @@
-pandas>=1.0.0
-inflect>=6.0.0
-openai
-
-[dev]
-pytest>=3.7
