@@ -13,15 +13,17 @@ setup(
   long_description_content_type = 'text/markdown',
   long_description = long_description,
   py_modules = [
-    'narrate_descriptive', 
-    'pluralize', 
-    'read_data',
     'chatgpt',
     'clean_text',
-    'tags',
-    'get_frequency',
+    'data',
+    'format_pct',
     'format_text',
-    'format_pct'
+    'get_frequency',
+    'narrate_descriptive', 
+    'narrate_trend',
+    'pluralize', 
+    'tags',
+    'ytd'
     ],
   packages = find_packages(),
   install_requires = ['pandas >= 1.0.0', 'inflect >= 6.0.0', 'openai'],
