@@ -9,8 +9,10 @@ pynarrator/format_pct.py
 pynarrator/format_text.py
 pynarrator/get_frequency.py
 pynarrator/narrate_descriptive.py
+pynarrator/narrate_trend.py
 pynarrator/pluralize.py
 pynarrator/tags.py
+pynarrator/ytd.py
 pynarrator.egg-info/PKG-INFO
 pynarrator.egg-info/SOURCES.txt
 pynarrator.egg-info/dependency_links.txt

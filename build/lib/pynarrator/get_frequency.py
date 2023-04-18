@@ -32,8 +32,9 @@ def get_frequency(df, date_field=None):
         raise ValueError("'df' must have at least 1 row")
         
     if date_field is None:
-        date_fields = [col for col in df.columns if np.issubdtype(df[col].dtype, np.datetime64)]
-        if len(date_fields) == 0:
+        date_fields = df.select_dtypes(include=[np.datetime64]).columns if not df.select_dtypes(include=[np.datetime64]).columns.empty else None
+        
+        if date_fields is None:
             raise ValueError("No date field detected in 'df'")
         elif len(date_fields) > 1:
             raise ValueError("Multiple date fields detected in 'df', please specify 'date_field'")
@@ -44,9 +45,7 @@ def get_frequency(df, date_field=None):
             raise ValueError("'date_field' must be present in the supplied data frame")
         elif not np.issubdtype(df[date_field].dtype, np.datetime64):
             raise ValueError("'date_field' must be of datetime type")
-        
-    dimensions = [col for col in df.columns if np.issubdtype(df[col].dtype, np.object_)]
-    
+            
     df = df.rename(columns={date_field: "date_field"})
     
     est_frequency = df["date_field"].diff().dt.days.abs().value_counts().idxmax()
