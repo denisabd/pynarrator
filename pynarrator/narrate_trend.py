@@ -5,10 +5,10 @@ def get_trend_outliers(
     df, 
     dimension, 
     measure, 
-    total=None, 
-    summarization="sum", 
-    coverage=0.5, 
-    coverage_limit=5):
+    total = None, 
+    summarization = "sum", 
+    coverage = 0.5, 
+    coverage_limit = 5):
     """
     Returns trend outliers based on a given dataframe, dimension, and measure.
 
@@ -109,16 +109,6 @@ def get_trend_outliers(
 
     return output
 
-from pynarrator.data import read_data
-import pandas as pd
-import numpy as np
-
-sales = read_data()
-sales['Date'] = pd.to_datetime(sales['Date'])
-sales_monthly = sales.groupby(['Region', 'Product', pd.Grouper(key='Date', freq='MS')])['Sales'].sum().reset_index()
-
-out = get_trend_outliers(sales_monthly, dimension = 'Region', measure = 'Sales')
-print(out)
 
 def narrate_trend(
   df,
@@ -315,3 +305,18 @@ def narrate_trend(
     narrative = list(narrative.values())
     
   return(narrative)
+
+
+"""
+from pynarrator.data import read_data
+from pynarrator.narrate_trend import get_trend_outliers
+import pandas as pd
+import numpy as np
+
+sales = read_data()
+sales['Date'] = pd.to_datetime(sales['Date'])
+sales_monthly = sales.groupby(['Region', 'Product', pd.Grouper(key='Date', freq='MS')])['Sales'].sum().reset_index()
+
+out = get_trend_outliers(sales_monthly, dimension = 'Region', measure = 'Sales')
+print(out)
+"""
